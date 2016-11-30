@@ -1,0 +1,40 @@
+<Shell>
+
+	<ShellAttributes>
+	</ShellAttributes>
+
+    <ShellModel Family="Traffic Generator">
+        <ResourceModel Name="Ixia Chassis" Description="Ixia Chassis" SupportsConcurrentCommands="false">
+    		<AttachedAttributes>
+        		<AttachedAttribute Name="Client Install Path" IsOverridable="true" IsLocal="true">
+            		<AllowedValues />
+          		</AttachedAttribute>
+            	<AttachedAttribute Name="Controller Group" IsOverridable="true" IsLocal="true">
+            		<AllowedValues />
+            	</AttachedAttribute>
+            	<AttachedAttribute Name="Model" IsOverridable="true" IsLocal="true">
+                	<AllowedValues />
+           		</AttachedAttribute>
+            	<AttachedAttribute Name="Power Management" IsOverridable="true" IsLocal="true">
+            		<AllowedValues />
+            	</AttachedAttribute>
+            	<AttachedAttribute Name="Server Description" IsOverridable="false" IsLocal="true">
+            		<AllowedValues />
+            	</AttachedAttribute>
+            	<AttachedAttribute Name="Supported Applications" IsOverridable="true" IsLocal="true">
+            		<AllowedValues />
+        		</AttachedAttribute>
+            	<AttachedAttribute Name="Vendor" IsOverridable="true" IsLocal="true">
+  					<AllowedValues />
+           		</AttachedAttribute>
+            	<AttachedAttribute Name="Version" IsOverridable="true" IsLocal="true">
+            		<AllowedValues />
+            	</AttachedAttribute>
+      		</AttachedAttributes>
+            <Drivers>
+                <DriverName>IxiaShellDriver</DriverName>
+            </Drivers>
+        </ResourceModel>
+    </ShellModel>
+
+</Shell>
