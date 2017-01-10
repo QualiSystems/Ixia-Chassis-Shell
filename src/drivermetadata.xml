@@ -1,4 +1,4 @@
-<Driver Description="Spirent TestCenter shell" MainClass="driver.IxiaShellDriver" Name="StcShellDriver" Version="0.1.1">
+<Driver Description="Ixia IxOS shell" MainClass="driver.IxiaShellDriver" Name="StcShellDriver" Version="0.1.1">
     <Layout>
 	
     	<Command Name="get_inventory" DisplayName="Autoload" Tags="" Description="Import device into Cloudshell">

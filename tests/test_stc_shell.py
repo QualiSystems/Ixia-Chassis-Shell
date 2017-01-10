@@ -9,7 +9,7 @@ import unittest
 
 from cloudshell.shell.core.driver_context import (ConnectivityContext, ResourceContextDetails, InitCommandContext)
 
-from src.driver import IxiaHandler
+from src.ixia_handler import IxiaHandler
 
 
 class TestIxiaShellDriver(unittest.TestCase):

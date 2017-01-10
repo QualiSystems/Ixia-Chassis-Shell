@@ -4,7 +4,7 @@
     	<ResourceTemplate Name="Ixia" Model="Ixia Chassis" Driver="IxiaShellDriver">
         	<Description></Description>
         	<AutoLoad Enable="true">
-            	<Description>Load Ixia Chassis</Description>
+            	<Description>This Shell template will create an Ixia chassis resource in CloudShell. The Autoload will read all modules and ports of the chassis.</Description>
         	</AutoLoad>
         <Attributes>
             <Attribute Name="Client Install Path" Value="" />
