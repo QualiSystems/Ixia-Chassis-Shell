@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ShellsConfiguration xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.qualisystems.com/ResourceManagement/ShellsConfigurationSchema.xsd">
 	<ResourceTemplates>
-    	<ResourceTemplate Name="Ixia" Model="Ixia Chassis" Driver="IxiaShellDriver">
+    	<ResourceTemplate Name="Ixia Chassis" Model="Ixia Chassis" Driver="IxiaShellDriver">
         	<Description></Description>
         	<AutoLoad Enable="true">
             	<Description>This Shell template will create an Ixia chassis resource in CloudShell. The Autoload will read all modules and ports of the chassis.</Description>
