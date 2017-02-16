@@ -2,6 +2,6 @@ shell:
     name: stc_shell
     author: Yoram Shamir
     email: yoram-s@quali.com
-    description: Ixia IxOS shell
+    description: Ixia Chassis shell
     version: 1.0.1
-    driver_name: IxiaShellDriver
+    driver_name: IxiaChassisDriver

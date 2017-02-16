@@ -4,7 +4,7 @@ from cloudshell.shell.core.resource_driver_interface import ResourceDriverInterf
 from ixia_handler import IxiaHandler
 
 
-class IxiaShellDriver(ResourceDriverInterface):
+class IxiaChassisDriver(ResourceDriverInterface):
 
     def __init__(self):
         self.handler = IxiaHandler()
