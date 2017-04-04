@@ -11,13 +11,28 @@ from cloudshell.shell.core.driver_context import (ConnectivityContext, ResourceC
 
 from src.ixia_handler import IxiaHandler
 
+controller = 'localhost'
+port = 8009
+install_path = 'C:/Program Files (x86)/Ixia/IxNetwork/8.01-GA'
+
+address = '192.168.42.61'
+port = ''
+install_path = ''
+
+address = '192.168.42.174'
+port = ''
+install_path = 'C:/Program Files (x86)/Ixia/IxOS/8.20-EA'
+
 
 class TestIxiaShellDriver(unittest.TestCase):
 
     def setUp(self):
         self.connectivity = ConnectivityContext(None, None, None, None)
         self.resource = ResourceContextDetails(None, None, None, None, None, None, None, None, None, None)
-        self.resource.address = '192.168.42.61'
+        self.resource.address = address
+        self.resource.attributes = {'Client Install Path': install_path,
+                                    'Controller Address': controller,
+                                    'Controller TCP Port': port}
         context = InitCommandContext(self.connectivity, self.resource)
         self.driver = IxiaHandler()
         self.driver.initialize(context)
@@ -25,7 +40,7 @@ class TestIxiaShellDriver(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_get_inventory_something(self):
+    def test_get_inventory(self):
         context = InitCommandContext(self.connectivity, self.resource)
         inventory = self.driver.get_inventory(context)
         for r in inventory.resources:
