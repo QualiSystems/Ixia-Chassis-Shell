@@ -4,7 +4,7 @@ import logging
 
 from cloudshell.shell.core.driver_context import AutoLoadDetails, AutoLoadResource, AutoLoadAttribute
 
-from pyixia import Ixia
+from ixexplorer.ixe_app import IxeApp
 from ixnetwork.api.ixn_python import IxnPythonWrapper
 from ixnetwork.ixn_app import IxnApp
 
@@ -17,7 +17,8 @@ class IxiaHandler(object):
         """
 
         self.logger = logging.getLogger('log')
-        self.logger.setLevel('DEBUG')
+        self.logger.setLevel(logging.DEBUG)
+        self.logger.addHandler(logging.FileHandler('c:/temp/ixia_chassis_shell.log'))
 
         port = context.resource.attributes['Controller TCP Port']
         client_install_path = context.resource.attributes['Client Install Path']
@@ -40,7 +41,7 @@ class IxiaHandler(object):
             # Not likely, but on Windows servers users can set the Tcl server port, so we can't assume 4555.
             if not port:
                 port = 4555
-            self.ixia = Ixia(host=address, port=int(port), rsa_id=rsa_id)
+            self.ixia = IxeApp(self.logger, host=address, port=int(port), rsa_id=rsa_id)
             self.ixia.connect()
 
     def get_inventory(self, context):
@@ -138,7 +139,9 @@ class IxiaHandler(object):
         resource = AutoLoadResource(model='Generic Traffic Generator Port', name='Port ' + str(port.id),
                                     relative_address=str(card.id) + '/' + str(port.id))
         self.resources.append(resource)
-        supported_speed = max(port.supported_speeds(), key=int)
+        self.logger.debug('supported_speeds = {}'.format(port.supported_speeds()))
+#         supported_speed = max(port.supported_speeds(), key=int)
+        supported_speed = '1000'
         self.attributes.append(AutoLoadAttribute(relative_address=str(card.id) + '/' + str(port.id),
                                                  attribute_name='Supported Speed',
                                                  attribute_value=int(supported_speed)))

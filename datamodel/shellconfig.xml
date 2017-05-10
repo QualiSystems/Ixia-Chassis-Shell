@@ -4,7 +4,7 @@
     	<ResourceTemplate Name="Ixia Chassis" Model="Ixia Chassis" Driver="IxiaChassisDriver">
         	<Description></Description>
         	<AutoLoad Enable="true">
-            	<Description>Load Ixia Generic chassis</Description>
+            	<Description>Load Ixia chassis</Description>
         	</AutoLoad>
         <Attributes>
             <Attribute Name="Client Install Path" Value="" />
