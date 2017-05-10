@@ -4,14 +4,14 @@
     	<ResourceTemplate Name="Ixia Chassis" Model="Ixia Chassis" Driver="IxiaChassisDriver">
         	<Description></Description>
         	<AutoLoad Enable="true">
-            	<Description>Load Ixia Generic chassis</Description>
+            	<Description>Load Ixia chassis</Description>
         	</AutoLoad>
-        <Attributes>
-            <Attribute Name="Client Install Path" Value="" />
-            <Attribute Name="Power Management" Value="" />
-            <Attribute Name="Controller Address" Value="" />
-            <Attribute Name="Controller TCP Port" Value="" />
-        </Attributes>
+        	<Attributes>
+            	<Attribute Name="Client Install Path" Value="" />
+            	<Attribute Name="Power Management" Value="" />
+            	<Attribute Name="Controller Address" Value="" />
+            	<Attribute Name="Controller TCP Port" Value="" />
+        	</Attributes>
     	</ResourceTemplate>
 	</ResourceTemplates>
 </ShellsConfiguration>
