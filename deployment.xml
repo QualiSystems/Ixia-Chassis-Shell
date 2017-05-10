@@ -18,11 +18,11 @@
 
     <!-- The drivers to update, holds one or more drivers -->
     <drivers>
- 		<driver runFromLocalProject="false" waitForDebugger="false" sourceRootFolder="src">
+        <driver runFromLocalProject="false" waitForDebugger="false" sourceRootFolder="src">
             <sources>
-                 <source>src</source>            
+                <source>src</source>
             </sources>
-            <targetName>IxiaChassisDriver</targetName>
+            <targetName>Ixia Chassis Driver</targetName>
         </driver>
     </drivers>
 
