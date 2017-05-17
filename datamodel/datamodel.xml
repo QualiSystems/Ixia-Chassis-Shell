@@ -9,7 +9,7 @@
       		</Rules>
     	</AttributeInfo>
     	<AttributeInfo Name="Controller Address" Type="String" DefaultValue="" IsReadOnly="false"
-    				   Description="The TCP port of the traffic server. Relevant only in case an external server is configured.">
+    				   Description="The IP address of the traffic server. Relevant only in case an external server is configured.">
       		<Rules>
         		<Rule Name="Configuration" />
       		</Rules>
@@ -81,13 +81,6 @@
     	</AttributeInfo>
     	<AttributeInfo Name="Version" Type="String" DefaultValue="" IsReadOnly="true"
     				   Description="The firmware version of the resource.">
-      		<Rules Override="false">
-	     		<Rule Name="Setting" />
-	     		<Rule Name="Available For Abstract Resources" />
-      		</Rules>
-    	</AttributeInfo>
-		<AttributeInfo Name="Vendor" Type="String" DefaultValue="" IsReadOnly="true"
-					   Description="Vendor name.">
       		<Rules Override="false">
 	     		<Rule Name="Setting" />
 	     		<Rule Name="Available For Abstract Resources" />

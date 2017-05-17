@@ -4,4 +4,4 @@ shell:
     email: yoram-s@quali.com
     description: Ixia Chassis shell
     version: 1.0.7
-    driver_name: Ixia Chassis Driver
+    driver_name: IxiaChassisDriver

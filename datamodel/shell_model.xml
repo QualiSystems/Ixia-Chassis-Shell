@@ -25,15 +25,12 @@
                 <AttachedAttribute Name="Server Description" IsOverridable="false" IsLocal="true">
                     <AllowedValues/>
                 </AttachedAttribute>
-                <AttachedAttribute Name="Vendor" IsOverridable="true" IsLocal="true">
-                    <AllowedValues/>
-                </AttachedAttribute>
                 <AttachedAttribute Name="Version" IsOverridable="true" IsLocal="true">
                     <AllowedValues/>
                 </AttachedAttribute>
             </AttachedAttributes>
             <Drivers>
-                <DriverName>Ixia Chassis Driver</DriverName>
+                <DriverName>IxiaChassisDriver</DriverName>
             </Drivers>
         </ResourceModel>
     </ShellModel>
