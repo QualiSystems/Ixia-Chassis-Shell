@@ -67,9 +67,6 @@ class IxiaHandler(object):
     def _get_chassis_ixn(self, chassis):
 
         self.attributes.append(AutoLoadAttribute(relative_address='',
-                                                 attribute_name='Vendor',
-                                                 attribute_value='Ixia'))
-        self.attributes.append(AutoLoadAttribute(relative_address='',
                                                  attribute_name='Model',
                                                  attribute_value=chassis.attributes['chassisType']))
         self.attributes.append(AutoLoadAttribute(relative_address='',
@@ -105,9 +102,6 @@ class IxiaHandler(object):
     def _get_chassis_ixos(self, chassis):
         """ Get chassis resource and attributes. """
 
-        self.attributes.append(AutoLoadAttribute(relative_address='',
-                                                 attribute_name='Vendor',
-                                                 attribute_value='Ixia'))
         self.attributes.append(AutoLoadAttribute(relative_address='',
                                                  attribute_name='Model',
                                                  attribute_value=chassis.type_name))
