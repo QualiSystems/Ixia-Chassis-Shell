@@ -82,21 +82,23 @@ class IxiaHandler(object):
     def _get_module_ixn(self, card_id, card):
         """ Get module resource and attributes. """
 
-        resource = AutoLoadResource(model='Generic Traffic Generator Module', name='Card ' + card_id,
-                                    relative_address=card_id)
+        relative_address = 'M' + card_id
+        resource = AutoLoadResource(model='Generic Traffic Generator Module', name='Module' + card_id,
+                                    relative_address=relative_address)
         self.resources.append(resource)
-        self.attributes.append(AutoLoadAttribute(relative_address=card_id,
+        self.attributes.append(AutoLoadAttribute(relative_address=relative_address,
                                                  attribute_name='Model',
                                                  attribute_value=card.attributes['description']))
 
         for port_id, port in card.ports.items():
-            self._get_port_ixn(card_id, port_id, port)
+            self._get_port_ixn(relative_address, port_id, port)
 
-    def _get_port_ixn(self, card_id, port_id, port):
+    def _get_port_ixn(self, card_relative_address, port_id, port):
         """ Get port resource and attributes. """
 
-        resource = AutoLoadResource(model='Generic Traffic Generator Port', name='Port ' + port_id,
-                                    relative_address=card_id + '/' + port_id)
+        relative_address = card_relative_address + '/P' + port_id
+        resource = AutoLoadResource(model='Generic Traffic Generator Port', name='Port' + port_id,
+                                    relative_address=relative_address)
         self.resources.append(resource)
 
     def _get_chassis_ixos(self, chassis):
@@ -118,24 +120,26 @@ class IxiaHandler(object):
     def _get_module_ixos(self, card):
         """ Get module resource and attributes. """
 
-        resource = AutoLoadResource(model='Generic Traffic Generator Module', name='Card ' + str(card.id),
-                                    relative_address=card.id)
+        relative_address = 'M' + str(card.id)
+        resource = AutoLoadResource(model='Generic Traffic Generator Module', name='Card' + str(card.id),
+                                    relative_address=relative_address)
         self.resources.append(resource)
-        self.attributes.append(AutoLoadAttribute(relative_address=card.id,
+        self.attributes.append(AutoLoadAttribute(relative_address=relative_address,
                                                  attribute_name='Model',
                                                  attribute_value=card.type_name))
         for port in card.ports:
-            self._get_port_ixos(card, port)
+            self._get_port_ixos(relative_address, port)
 
-    def _get_port_ixos(self, card, port):
+    def _get_port_ixos(self, card_relative_address, port):
         """ Get port resource and attributes. """
 
-        resource = AutoLoadResource(model='Generic Traffic Generator Port', name='Port ' + str(port.id),
-                                    relative_address=str(card.id) + '/' + str(port.id))
+        relative_address = card_relative_address + '/P' + str(port.id)
+        resource = AutoLoadResource(model='Generic Traffic Generator Port', name='Port' + str(port.id),
+                                    relative_address=relative_address)
         self.resources.append(resource)
         self.logger.debug('supported_speeds = {}'.format(port.supported_speeds()))
 #         supported_speed = max(port.supported_speeds(), key=int)
         supported_speed = '1000'
-        self.attributes.append(AutoLoadAttribute(relative_address=str(card.id) + '/' + str(port.id),
+        self.attributes.append(AutoLoadAttribute(relative_address=relative_address,
                                                  attribute_name='Supported Speed',
                                                  attribute_value=int(supported_speed)))
