@@ -70,8 +70,14 @@ class IxiaHandler(object):
                                                  attribute_name='Model',
                                                  attribute_value=chassis.attributes['chassisType']))
         self.attributes.append(AutoLoadAttribute(relative_address='',
+                                                 attribute_name='Serial Number',
+                                                 attribute_value=''))
+        self.attributes.append(AutoLoadAttribute(relative_address='',
                                                  attribute_name='Server Description',
                                                  attribute_value=''))
+        self.attributes.append(AutoLoadAttribute(relative_address='',
+                                                 attribute_name='Vendor',
+                                                 attribute_value='Ixia'))
         self.attributes.append(AutoLoadAttribute(relative_address='',
                                                  attribute_name='Version',
                                                  attribute_value=chassis.attributes['chassisVersion']))
@@ -89,6 +95,12 @@ class IxiaHandler(object):
         self.attributes.append(AutoLoadAttribute(relative_address=relative_address,
                                                  attribute_name='Model',
                                                  attribute_value=card.attributes['description']))
+        self.attributes.append(AutoLoadAttribute(relative_address=relative_address,
+                                                 attribute_name='Serial Number',
+                                                 attribute_value=''))
+        self.attributes.append(AutoLoadAttribute(relative_address=relative_address,
+                                                 attribute_name='Version',
+                                                 attribute_value=''))
 
         for port_id, port in card.ports.items():
             self._get_port_ixn(relative_address, port_id, port)
@@ -108,8 +120,14 @@ class IxiaHandler(object):
                                                  attribute_name='Model',
                                                  attribute_value=chassis.type_name))
         self.attributes.append(AutoLoadAttribute(relative_address='',
+                                                 attribute_name='Serial Number',
+                                                 attribute_value=''))
+        self.attributes.append(AutoLoadAttribute(relative_address='',
                                                  attribute_name='Server Description',
-                                                 attribute_value=chassis.name))
+                                                 attribute_value=''))
+        self.attributes.append(AutoLoadAttribute(relative_address='',
+                                                 attribute_name='Vendor',
+                                                 attribute_value='Ixia'))
         self.attributes.append(AutoLoadAttribute(relative_address='',
                                                  attribute_name='Version',
                                                  attribute_value=chassis.ix_server_version))
@@ -121,12 +139,18 @@ class IxiaHandler(object):
         """ Get module resource and attributes. """
 
         relative_address = 'M' + str(card.id)
-        resource = AutoLoadResource(model='Generic Traffic Generator Module', name='Card' + str(card.id),
+        resource = AutoLoadResource(model='Generic Traffic Generator Module', name='Module' + str(card.id),
                                     relative_address=relative_address)
         self.resources.append(resource)
         self.attributes.append(AutoLoadAttribute(relative_address=relative_address,
                                                  attribute_name='Model',
                                                  attribute_value=card.type_name))
+        self.attributes.append(AutoLoadAttribute(relative_address=relative_address,
+                                                 attribute_name='Serial Number',
+                                                 attribute_value=card.serial_number.strip()))
+        self.attributes.append(AutoLoadAttribute(relative_address=relative_address,
+                                                 attribute_name='Version',
+                                                 attribute_value=card.hw_version))
         for port in card.ports:
             self._get_port_ixos(relative_address, port)
 
@@ -141,5 +165,5 @@ class IxiaHandler(object):
 #         supported_speed = max(port.supported_speeds(), key=int)
         supported_speed = '1000'
         self.attributes.append(AutoLoadAttribute(relative_address=relative_address,
-                                                 attribute_name='Supported Speed',
+                                                 attribute_name='Max Speed',
                                                  attribute_value=int(supported_speed)))

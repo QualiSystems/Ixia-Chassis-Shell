@@ -11,6 +11,7 @@
             	<Attribute Name="Controller Address" Value="" />
             	<Attribute Name="Controller TCP Port" Value="" />
             	<Attribute Name="Power Management" Value="" />
+            	<Attribute Name="Supported Applications" Value="" />
         	</Attributes>
     	</ResourceTemplate>
 	</ResourceTemplates>

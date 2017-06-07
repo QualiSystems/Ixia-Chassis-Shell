@@ -28,6 +28,9 @@
                 <AttachedAttribute Name="Supported Applications" IsOverridable="true" IsLocal="true">
                     <AllowedValues/>
                 </AttachedAttribute>
+                <AttachedAttribute Name="Vendor" IsOverridable="true" IsLocal="true">
+                    <AllowedValues/>
+                </AttachedAttribute>
                 <AttachedAttribute Name="Version" IsOverridable="true" IsLocal="true">
                     <AllowedValues/>
                 </AttachedAttribute>
