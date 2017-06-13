@@ -199,6 +199,6 @@
    		</ResourceFamily>
 	</ResourceFamilies>
   	<DriverDescriptors>
-    	<DriverDescriptor Name="IxiaChassisDriver" DriverType="PythonDriver" />
+    	<DriverDescriptor Name="BreakingPointChassisDriver" DriverType="PythonDriver" />
   	</DriverDescriptors>
 </DataModelInfo>
