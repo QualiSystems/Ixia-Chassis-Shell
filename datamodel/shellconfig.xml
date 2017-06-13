@@ -7,6 +7,8 @@
             	<Description>Load Ixia chassis</Description>
         	</AutoLoad>
         	<Attributes>
+                <Attribute Name="User" Value="" />
+                <Attribute Name="Password" Value="" />
             	<Attribute Name="Client Install Path" Value="" />
             	<Attribute Name="Controller Address" Value="" />
             	<Attribute Name="Controller TCP Port" Value="" />
