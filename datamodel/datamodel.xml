@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DataModelInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.qualisystems.com/ResourceManagement/DataModelSchema.xsd">
-  
   	<Attributes>
     	<AttributeInfo Name="Client Install Path" Type="String" DefaultValue="" IsReadOnly="false"
     				   Description="The path in which the traffic client is installed on the Execution Server. For example 'C:/Program Files (x86)/Ixia/IxOS/6.90-EA'.">
@@ -22,7 +21,7 @@
     	</AttributeInfo>
 		<AttributeInfo Name="Logical Name" Type="String" DefaultValue="" IsReadOnly="false"
          			   Description="The port's logical name in the test configuration. If kept emtpy - allocation will applied in the blue print.">
-            <Rules Override="true">
+            <Rules>
                 <Rule Name="Setting"/>
             </Rules>
         </AttributeInfo>
@@ -55,7 +54,7 @@
         </AttributeInfo>
         <AttributeInfo Name="Port Description" Type="String" DefaultValue="" IsReadOnly="true"
         			   Description="The description of the port as configured in the device.">
-            <Rules Override="false">
+            <Rules>
                 <Rule Name="Available For Abstract Resources"/>
                 <Rule Name="Setting"/>
             </Rules>
@@ -68,14 +67,14 @@
     	</AttributeInfo>
         <AttributeInfo Name="Serial Number" Type="String" DefaultValue="" IsReadOnly="true"
          			   Description="The serial number of the resource.">
-            <Rules Override="false">
+            <Rules>
                 <Rule Name="Available For Abstract Resources"/>
                 <Rule Name="Setting"/>
             </Rules>
         </AttributeInfo>
     	<AttributeInfo Name="Server Description" Type="String" DefaultValue="" IsReadOnly="true"
     				   Description="The full description of the server. Usually includes the OS, exact firmware version and additional characteritics of the device.">
-      		<Rules Override="false">
+      		<Rules>
 	     		<Rule Name="Available For Abstract Resources" />
 	     		<Rule Name="Setting" />
       		</Rules>
@@ -97,27 +96,24 @@
         </AttributeInfo>
         <AttributeInfo Name="Vendor" Type="String" DefaultValue="" IsReadOnly="true"
          			   Description="The name of the device manufacture.">
-            <Rules Override="false">
+            <Rules>
                 <Rule Name="Available For Abstract Resources"/>
                 <Rule Name="Setting"/>
             </Rules>
         </AttributeInfo>        
     	<AttributeInfo Name="Version" Type="String" DefaultValue="" IsReadOnly="true"
     				   Description="The firmware version of the resource.">
-      		<Rules Override="false">
+      		<Rules>
 	     		<Rule Name="Available For Abstract Resources" />
 	     		<Rule Name="Setting" />
       		</Rules>
     	</AttributeInfo>
  	</Attributes>
-
   	<ResourceFamilies>
-
     	<ResourceFamily Name="Traffic Generator Chassis" Description="" IsSearchable="true">
     		<Models />
       		<Categories />
     	</ResourceFamily>
-
         <ResourceFamily Name="Power Port" IsConnectable="true" IsLockedByDefault="true" Description="" IsSearchable="true">
             <AttachedAttributes/>
             <AttributeValues/>
@@ -147,7 +143,6 @@
             </Models>
             <Categories/>
         </ResourceFamily>
-
     	<ResourceFamily Name="Module" Description="" IsSearchable="true">
 			<Models>
 	        	<ResourceModel Name="Generic Traffic Generator Module" Description="Generic Traffic Generator Module" SupportsConcurrentCommands="false">
@@ -169,7 +164,6 @@
 			</Models>
       		<Categories />
     	</ResourceFamily>
-
 		<ResourceFamily Name="Port Group" Description="" IsSearchable="true" IsActAsGroup="true">
 			<AttachedAttributes />
 			<Models>
@@ -181,7 +175,6 @@
 			</Models>
       		<Categories />
     	</ResourceFamily>
-
 		<ResourceFamily Name="Port" IsSearchable="true" IsConnectable="true" IsLockedByDefault="true">
       		<Models>
 				<ResourceModel Name="Generic Traffic Generator Port" Description="Generaic Traffic Generator Port" SupportsConcurrentCommands="false">
@@ -204,11 +197,8 @@
      		</Models>
      		<Categories />
    		</ResourceFamily>
-
 	</ResourceFamilies>
-
   	<DriverDescriptors>
     	<DriverDescriptor Name="IxiaChassisDriver" DriverType="PythonDriver" />
   	</DriverDescriptors>
-
 </DataModelInfo>
