@@ -1,30 +1,27 @@
 
 import os
-import logging
 
 from cloudshell.shell.core.driver_context import AutoLoadDetails, AutoLoadResource, AutoLoadAttribute
 
 from ixexplorer.ixe_app import IxeApp
-from ixnetwork.api.ixn_python import IxnPythonWrapper
+from ixnetwork.api.ixn_tcl import IxnTclWrapper
 from ixnetwork.ixn_app import IxnApp
 
 
 class IxiaHandler(object):
 
-    def initialize(self, context):
+    def initialize(self, context, logger):
         """
         :type context: cloudshell.shell.core.driver_context.InitCommandContext
         """
 
-        self.logger = logging.getLogger('log')
-        self.logger.setLevel(logging.DEBUG)
-        self.logger.addHandler(logging.FileHandler('c:/temp/ixia_chassis_shell.log'))
+        self.logger = logger
 
         port = context.resource.attributes['Controller TCP Port']
         client_install_path = context.resource.attributes['Client Install Path']
 
         if 'ixnetwork' in client_install_path.lower():
-            api = IxnPythonWrapper(self.logger, client_install_path)
+            api = IxnTclWrapper(self.logger, client_install_path)
             self.ixia = IxnApp(self.logger, api)
             controller_address = context.resource.attributes['Controller Address']
             if not controller_address:
@@ -82,7 +79,7 @@ class IxiaHandler(object):
                                                  attribute_name='Version',
                                                  attribute_value=chassis.attributes['chassisVersion']))
 
-        for module_id, module in chassis.modules.items():
+        for module_id, module in chassis.cards.items():
             self._get_module_ixn(module_id, module)
 
     def _get_module_ixn(self, card_id, card):

@@ -1,6 +1,8 @@
 
 from cloudshell.shell.core.resource_driver_interface import ResourceDriverInterface
 
+from cloudshell.traffic import tg_helper
+
 from ixia_handler import IxiaHandler
 
 
@@ -13,7 +15,9 @@ class IxiaChassisDriver(ResourceDriverInterface):
         """
         :type context: cloudshell.shell.core.driver_context.InitCommandContext
         """
-        self.handler.initialize(context)
+
+        self.logger = tg_helper.get_logger()
+        self.handler.initialize(context, self.logger)
 
     def cleanup(self):
         pass
