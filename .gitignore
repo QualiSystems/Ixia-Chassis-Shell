@@ -65,3 +65,5 @@ cloudshell_config.yml
 .settings
 
 deployment/
+
+*.pdf

@@ -5,11 +5,13 @@
 Tests for `IxiaShellDriver`
 """
 
+import sys
+import logging
 import unittest
 
 from cloudshell.shell.core.driver_context import (ConnectivityContext, ResourceContextDetails, InitCommandContext)
 
-from src.ixia_handler import IxiaHandler
+from src.driver import IxiaChassisDriver
 
 address = '192.168.42.174'
 port = '8022'
@@ -34,8 +36,10 @@ class TestIxiaShellDriver(unittest.TestCase):
                                     'Controller Address': controller,
                                     'Controller TCP Port': port}
         context = InitCommandContext(self.connectivity, self.resource)
-        self.driver = IxiaHandler()
+        self.driver = IxiaChassisDriver()
         self.driver.initialize(context)
+        print self.driver.logger.handlers[0].baseFilename
+        self.driver.logger.addHandler(logging.StreamHandler(sys.stdout))
 
     def tearDown(self):
         pass
@@ -50,5 +54,4 @@ class TestIxiaShellDriver(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    import sys
     sys.exit(unittest.main())
