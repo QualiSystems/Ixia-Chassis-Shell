@@ -16,7 +16,7 @@ class IxiaChassisDriver(ResourceDriverInterface):
         :type context: cloudshell.shell.core.driver_context.InitCommandContext
         """
 
-        self.logger = tg_helper.get_logger()
+        self.logger = tg_helper.get_logger(context)
         self.handler.initialize(context, self.logger)
 
     def cleanup(self):
