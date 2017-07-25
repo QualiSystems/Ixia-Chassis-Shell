@@ -1,7 +1,7 @@
 shell:
-    name: ixia_chassis_shell
-    author: Yoram Shamir
-    email: yoram-s@quali.com
-    description: Ixia Chassis shell
-    version: 1.2.1
-    driver_name: IxiaChassisDriver
+  author: Yoram Shamir
+  description: Ixia Chassis shell
+  driver_name: IxiaChassisDriver
+  email: yoram-s@quali.com
+  name: ixia_chassis_shell
+  version: 1.2.3
