@@ -7,7 +7,7 @@ from git import Repo
 
 # Write new version
 
-new_version = '1.2.3'
+new_version = '1.2.4'
 
 with open("shell.yml", 'r') as f:
     shell = yaml.safe_load(f)

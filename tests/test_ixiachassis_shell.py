@@ -17,13 +17,13 @@ controller = 'localhost'
 port = 8009
 install_path = 'C:/Program Files (x86)/Ixia/IxNetwork/8.01-GA'
 
+address = '192.168.42.168'
+port = '8022'
+install_path = 'C:/Program Files (x86)/Ixia/IxOS/8.30-EA'
+
 address = '192.168.42.61'
 port = ''
 install_path = ''
-
-address = '192.168.42.174'
-port = '8022'
-install_path = 'C:/Program Files (x86)/Ixia/IxOS/8.20-EA'
 
 
 class TestIxiaShellDriver(unittest.TestCase):
