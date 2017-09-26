@@ -6,50 +6,64 @@ Tests for `IxiaShellDriver`
 """
 
 import sys
-import logging
 import unittest
 
-from cloudshell.shell.core.driver_context import (ConnectivityContext, ResourceContextDetails, InitCommandContext)
+from cloudshell.api.cloudshell_api import CloudShellAPISession, ResourceAttributesUpdateRequest, AttributeNameValue
 
-from src.driver import IxiaChassisDriver
-
-controller = 'localhost'
-port = 8009
-install_path = 'C:/Program Files (x86)/Ixia/IxNetwork/8.01-GA'
-
-address = '192.168.42.168'
-port = '8022'
-install_path = 'C:/Program Files (x86)/Ixia/IxOS/8.30-EA'
-
-address = '192.168.42.61'
-port = ''
-install_path = ''
+ixia_chassis = {
+                'win-ixos': {'address': '192.168.42.61',
+                             'controller': '',
+                             'port': '',
+                             'install_path': '',
+                             'modules': 5,
+                             },
+                'lin-ixos': {'address': '192.168.42.172',
+                             'controller': '',
+                             'port': '8022',
+                             'install_path': 'C:/Program Files (x86)/Ixia/IxOS/8.30-EA',
+                             'modules': 1,
+                             },
+                'ixnetwork': {'address': '192.168.42.61',
+                              'controller': 'localhost',
+                              'port': '8009',
+                              'install_path': 'C:/Program Files (x86)/Ixia/IxNetwork/8.01-GA',
+                              'modules': 5,
+                              },
+                }
 
 
 class TestIxiaShellDriver(unittest.TestCase):
 
+    session = None
+
     def setUp(self):
-        connectivity = ConnectivityContext(None, None, None, None)
-        resource = ResourceContextDetails('testing', None, None, None, None, None, None, None, None, None)
-        resource.address = address
-        resource.attributes = {'Client Install Path': install_path,
-                               'Controller Address': controller,
-                               'Controller TCP Port': port}
-        self.context = InitCommandContext(connectivity, resource)
-        self.driver = IxiaChassisDriver()
-        self.driver.initialize(self.context)
-        print(self.driver.logger.handlers[0].baseFilename)
-        self.driver.logger.addHandler(logging.StreamHandler(sys.stdout))
+        self.session = CloudShellAPISession('localhost', 'admin', 'admin', 'Global')
 
     def tearDown(self):
+        for resource in self.session.GetResourceList('Testing').Resources:
+            self.session.DeleteResource(resource.Name)
+
+    def testHelloWorld(self):
         pass
 
     def test_get_inventory(self):
-        inventory = self.driver.get_inventory(self.context)
-        for r in inventory.resources:
-            print r.relative_address, r.model, r.name
-        for a in inventory.attributes:
-            print a.relative_address, a.attribute_name, a.attribute_value
+        for name, properties in ixia_chassis.items():
+            self.resource = self.session.CreateResource(resourceFamily='Traffic Generator Chassis',
+                                                        resourceModel='Ixia Chassis',
+                                                        resourceName=name,
+                                                        resourceAddress=properties['address'],
+                                                        folderFullPath='Testing',
+                                                        parentResourceFullPath='',
+                                                        resourceDescription='should be removed after test')
+            self.session.UpdateResourceDriver(self.resource.Name, 'IxiaChassisDriver')
+            attributes = [AttributeNameValue('Client Install Path', properties['install_path']),
+                          AttributeNameValue('Controller Address', properties['controller']),
+                          AttributeNameValue('Controller TCP Port', properties['port'])]
+            self.session.SetAttributesValues(ResourceAttributesUpdateRequest(self.resource.Name, attributes))
+            self.session.AutoLoad(self.resource.Name)
+            resource_details = self.session.GetResourceDetails(self.resource.Name)
+            assert(len(resource_details.ChildResources) == properties['modules'])
+            self.session.DeleteResource(self.resource.Name)
 
 
 if __name__ == '__main__':
