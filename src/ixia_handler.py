@@ -3,9 +3,9 @@ import os
 
 from cloudshell.shell.core.driver_context import AutoLoadDetails, AutoLoadResource, AutoLoadAttribute
 
-from ixexplorer.ixe_app import IxeApp
-from ixnetwork.api.ixn_tcl import IxnTclWrapper
-from ixnetwork.ixn_app import IxnApp
+from trafficgenerator.tgn_utils import ApiType
+from ixexplorer.ixe_app import init_ixe
+from ixnetwork.ixn_app import init_ixn, IxnApp
 
 
 class IxiaHandler(object):
@@ -21,8 +21,7 @@ class IxiaHandler(object):
         client_install_path = context.resource.attributes['Client Install Path']
 
         if 'ixnetwork' in client_install_path.lower():
-            api = IxnTclWrapper(self.logger, client_install_path)
-            self.ixia = IxnApp(self.logger, api)
+            self.ixia = init_ixn(ApiType.tcl, self.logger, client_install_path)
             controller_address = context.resource.attributes['Controller Address']
             if not controller_address:
                 controller_address = 'localhost'
@@ -38,8 +37,8 @@ class IxiaHandler(object):
             # Not likely, but on Windows servers users can set the Tcl server port, so we can't assume 4555.
             if not port:
                 port = 4555
-            self.ixia = IxeApp(self.logger, host=address, port=int(port), rsa_id=rsa_id)
-            self.ixia.connect()
+            self.ixia = init_ixe(ApiType.socket, self.logger, host=address, port=int(port), rsa_id=rsa_id)
+            self.ixia.connect(chassis=address)
 
     def get_inventory(self, context):
         """ Return device structure with all standard attributes
@@ -82,16 +81,16 @@ class IxiaHandler(object):
         for module_id, module in chassis.cards.items():
             self._get_module_ixn(module_id, module)
 
-    def _get_module_ixn(self, card_id, card):
+    def _get_module_ixn(self, module_id, module):
         """ Get module resource and attributes. """
 
-        relative_address = 'M' + card_id
-        resource = AutoLoadResource(model='Generic Traffic Generator Module', name='Module' + card_id,
+        relative_address = 'M' + str(module_id)
+        resource = AutoLoadResource(model='Generic Traffic Generator Module', name='Module' + str(module_id),
                                     relative_address=relative_address)
         self.resources.append(resource)
         self.attributes.append(AutoLoadAttribute(relative_address=relative_address,
                                                  attribute_name='Model',
-                                                 attribute_value=card.attributes['description']))
+                                                 attribute_value=module.attributes['description']))
         self.attributes.append(AutoLoadAttribute(relative_address=relative_address,
                                                  attribute_name='Serial Number',
                                                  attribute_value=''))
@@ -99,14 +98,14 @@ class IxiaHandler(object):
                                                  attribute_name='Version',
                                                  attribute_value=''))
 
-        for port_id, port in card.ports.items():
+        for port_id, port in module.ports.items():
             self._get_port_ixn(relative_address, port_id, port)
 
     def _get_port_ixn(self, card_relative_address, port_id, port):
         """ Get port resource and attributes. """
 
-        relative_address = card_relative_address + '/P' + port_id
-        resource = AutoLoadResource(model='Generic Traffic Generator Port', name='Port' + port_id,
+        relative_address = card_relative_address + '/P' + str(port_id)
+        resource = AutoLoadResource(model='Generic Traffic Generator Port', name='Port' + str(port_id),
                                     relative_address=relative_address)
         self.resources.append(resource)
 
@@ -115,7 +114,7 @@ class IxiaHandler(object):
 
         self.attributes.append(AutoLoadAttribute(relative_address='',
                                                  attribute_name='Model',
-                                                 attribute_value=chassis.type_name))
+                                                 attribute_value=chassis.typeName))
         self.attributes.append(AutoLoadAttribute(relative_address='',
                                                  attribute_name='Serial Number',
                                                  attribute_value=''))
@@ -127,40 +126,38 @@ class IxiaHandler(object):
                                                  attribute_value='Ixia'))
         self.attributes.append(AutoLoadAttribute(relative_address='',
                                                  attribute_name='Version',
-                                                 attribute_value=chassis.ix_server_version))
-        for card in chassis.cards:
-            if card is not None:
-                self._get_module_ixos(card)
+                                                 attribute_value=chassis.ixServerVersion))
+        for card_id, card in chassis.cards.items():
+            self._get_module_ixos(card_id, card)
 
-    def _get_module_ixos(self, card):
+    def _get_module_ixos(self, card_id, card):
         """ Get module resource and attributes. """
 
-        relative_address = 'M' + str(card.id)
-        resource = AutoLoadResource(model='Generic Traffic Generator Module', name='Module' + str(card.id),
+        relative_address = 'M' + str(card_id)
+        resource = AutoLoadResource(model='Generic Traffic Generator Module', name='Module' + str(card_id),
                                     relative_address=relative_address)
         self.resources.append(resource)
         self.attributes.append(AutoLoadAttribute(relative_address=relative_address,
                                                  attribute_name='Model',
-                                                 attribute_value=card.type_name))
+                                                 attribute_value=card.typeName))
         self.attributes.append(AutoLoadAttribute(relative_address=relative_address,
                                                  attribute_name='Serial Number',
-                                                 attribute_value=card.serial_number.strip()))
+                                                 attribute_value=card.serialNumber.strip()))
         self.attributes.append(AutoLoadAttribute(relative_address=relative_address,
                                                  attribute_name='Version',
-                                                 attribute_value=card.hw_version))
-        for port in card.ports:
-            self._get_port_ixos(relative_address, port)
+                                                 attribute_value=card.hwVersion))
+        for port_id, port in card.ports.items():
+            self._get_port_ixos(relative_address, port_id, port)
 
-    def _get_port_ixos(self, card_relative_address, port):
+    def _get_port_ixos(self, card_relative_address, port_id, port):
         """ Get port resource and attributes. """
 
-        relative_address = card_relative_address + '/P' + str(port.id)
-        resource = AutoLoadResource(model='Generic Traffic Generator Port', name='Port' + str(port.id),
+        relative_address = card_relative_address + '/P' + str(port_id)
+        resource = AutoLoadResource(model='Generic Traffic Generator Port', name='Port' + str(port_id),
                                     relative_address=relative_address)
         self.resources.append(resource)
-        self.logger.debug('supported_speeds = {}'.format(port.supported_speeds()))
-#         supported_speed = max(port.supported_speeds(), key=int)
-        supported_speed = '1000'
+        supported_speeds = port.supported_speeds()
+        self.logger.debug('supported_speeds = {}'.format(supported_speeds))
         self.attributes.append(AutoLoadAttribute(relative_address=relative_address,
                                                  attribute_name='Max Speed',
-                                                 attribute_value=int(supported_speed)))
+                                                 attribute_value=int(max(port.supported_speeds(), key=int))))

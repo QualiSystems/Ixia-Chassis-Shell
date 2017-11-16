@@ -1,4 +1,4 @@
-<Driver Description="Ixia Chassis Driver" MainClass="driver.IxiaChassisDriver" Name="Ixia Chassis Driver" Version="1.2.6">
+<Driver Description="Ixia Chassis Driver" MainClass="driver.IxiaChassisDriver" Name="Ixia Chassis Driver" Version="1.2.7">
     <Layout>
         <Command Description="Import device into Cloudshell" DisplayName="Autoload" Name="get_inventory" Tags="">
         </Command>
