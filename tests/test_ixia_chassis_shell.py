@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Tests for `IxiaShellDriver`
+Tests for `IxiaChassisDriver`
 """
 
 import sys
@@ -16,9 +16,9 @@ ixia_chassis = {
                              'controller': '',
                              'port': '',
                              'install_path': '',
-                             'modules': 4,
+                             'modules': 2,
                              },
-                'lin-ixos': {'address': '192.168.42.170',
+                'lin-ixos': {'address': '192.168.42.175',
                              'controller': '',
                              'port': '8022',
                              'install_path': 'C:/Program Files (x86)/Ixia/IxOS/8.30-EA-Patch1',
