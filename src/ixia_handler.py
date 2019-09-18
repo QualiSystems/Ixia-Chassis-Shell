@@ -38,7 +38,8 @@ class IxiaHandler(object):
             if not port:
                 port = 4555
             self.ixia = init_ixe(ApiType.socket, self.logger, host=address, port=int(port), rsa_id=rsa_id)
-            self.ixia.connect(chassis=address)
+            self.ixia.connect()
+            self.ixia.add(address)
 
     def get_inventory(self, context):
         """ Return device structure with all standard attributes
@@ -56,7 +57,7 @@ class IxiaHandler(object):
             self._get_chassis_ixn(chassis)
         else:
             self.ixia.discover()
-            self._get_chassis_ixos(self.ixia.chassis)
+            self._get_chassis_ixos(self.ixia.chassis_chain.values()[0])
         details = AutoLoadDetails(self.resources, self.attributes)
         return details
 
@@ -156,8 +157,7 @@ class IxiaHandler(object):
         resource = AutoLoadResource(model='Generic Traffic Generator Port', name='Port' + str(port_id),
                                     relative_address=relative_address)
         self.resources.append(resource)
-        supported_speeds = port.supported_speeds()
-        self.logger.debug('supported_speeds = {}'.format(supported_speeds))
+        supported_speeds = port.supported_speeds() if port.supported_speeds() else ['1000']
         self.attributes.append(AutoLoadAttribute(relative_address=relative_address,
                                                  attribute_name='Max Speed',
-                                                 attribute_value=int(max(port.supported_speeds(), key=int))))
+                                                 attribute_value=int(max(supported_speeds, key=int))))

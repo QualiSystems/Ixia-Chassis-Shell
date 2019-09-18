@@ -5,4 +5,4 @@ cloudshell-traffic>=2.0.0
 requests==2.18.3
 paramiko==1.15.2
 ixnooapi==1.2.1
-ixeooapi==0.8.3
+pyixexplorer==0.9.4
